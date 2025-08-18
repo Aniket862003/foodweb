@@ -1,0 +1,37 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+
+@keyframes pop {
+    0% { transform: scale(0); opacity: 0; }
+    80% { transform: scale(1.1); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes checkmark {
+    0% { stroke-dashoffset: 50; }
+    100% { stroke-dashoffset: 0; }
+  }
+  
+  @keyframes circle {
+    0% { stroke-dashoffset: 150; }
+    100% { stroke-dashoffset: 0; }
+  }
+  
+  .animate-pop {
+    animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .animate-checkmark .animate-path {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: checkmark 0.5s ease-out 0.3s forwards;
+  }
+  
+  .animate-checkmark .animate-circle {
+    stroke-dasharray: 150;
+    stroke-dashoffset: 150;
+    animation: circle 0.8s ease-out forwards;
+  }

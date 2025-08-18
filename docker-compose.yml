@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db # Define volume to persist MongoDB data
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+    container_name: backend
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      -MONGO_URI=mongodb://localhost:27017/food_delivery_sys
+      - JWT_SECRET=paras_secret_key  # Securely pass JWT secret from .env
+    depends_on:
+      - mongodb
+    restart: always
+    env_file: # Load environment variables from .env file
+      - ./backend/.env
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:80"
+    restart: always
+
+volumes:
+  mongodb-data:  # Ensure this volume is correctly defined
