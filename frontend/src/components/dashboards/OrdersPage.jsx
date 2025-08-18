@@ -52,7 +52,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
   const handleSaveProfile = async () => {
     try {
       // Update in backend
-      const response = await axios.put('http://localhost:5000/api/auth/update', profileData, {
+      const response = await axios.put('https://foodweb-backend-g881.onrender.com/api/auth/update', profileData, {
         headers: { Authorization: localStorage.getItem("token") }
       });
   
@@ -74,7 +74,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
 
   const handleDeleteOrder = async (orderId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/orders/${orderId}`, {
+      await axios.delete(`https://foodweb-backend-g881.onrender.com/api/orders/${orderId}`, {
         headers: { Authorization: localStorage.getItem("token") }
       });
       
