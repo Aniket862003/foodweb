@@ -39,7 +39,7 @@ const SubscriptionsPage = () => {
   useEffect(() => {
     const fetchSubscriptions = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/subscriptions/my-subscriptions", {
+        const response = await axios.get("https://foodweb-backend-g881.onrender.com/api/subscriptions/my-subscriptions", {
           headers: { Authorization: localStorage.getItem("token") }
         });
         setSubscriptions(response.data);
