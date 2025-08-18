@@ -13,7 +13,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/auth/register", formData);
+      await axios.post("https://foodweb-backend-g881.onrender.com", formData);
       alert("Registration Successful! Redirecting to Login...");
       navigate("/login");
     } catch (error) {
