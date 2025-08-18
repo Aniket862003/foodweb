@@ -72,7 +72,7 @@ const CustomerDashboard = () => {
 
   const viewMenu = (id) => {
     setLoading(p => ({...p, menu: true}));
-    axios.get(`http://localhost:5000/api/restaurants/${id}/menu`)
+    axios.get(`https://foodweb-backend-g881.onrender.com/api/restaurants/${id}/menu`)
       .then(res => { setSelectedRestaurant(id); setMenu(res.data); setLoading(p => ({...p, menu: false})); })
       .catch(() => { alert("Error fetching menu"); setLoading(p => ({...p, menu: false})); });
   };
@@ -117,7 +117,7 @@ const CustomerDashboard = () => {
 
   const placeSub = () => {
     if (!subDates.startDate || !subDates.endDate) return alert("Please select dates.");
-    axios.post("http://localhost:5000/api/subscriptions/subscribe", {
+    axios.post("https://foodweb-backend-g881.onrender.com/api/subscriptions/subscribe", {
       menuItem: selectedMenuItem._id, 
       subscriptionType: subType, 
       ...subDates
@@ -132,7 +132,7 @@ const CustomerDashboard = () => {
 
   const placeOrder = () => {
     if (cart.length === 0) return alert("Cart is empty!");
-    axios.post("http://localhost:5000/api/orders/place", {
+    axios.post("https://foodweb-backend-g881.onrender.com/api/orders/place", {
       restaurant: selectedRestaurant, 
       items: cart.map(item => ({ menuItem: item._id, quantity: item.quantity }))
     }, { headers: { Authorization: localStorage.getItem("token") } })
@@ -152,7 +152,7 @@ const CustomerDashboard = () => {
   const handleSaveProfile = async () => {
     try {
       // Update in backend
-      const response = await axios.put('http://localhost:5000/api/auth/update', profileData, {
+      const response = await axios.put('https://foodweb-backend-g881.onrender.com/api/auth/update', profileData, {
         headers: { Authorization: localStorage.getItem("token") }
       });
   
@@ -187,8 +187,8 @@ const CustomerDashboard = () => {
       setLoading(p => ({...p, orders: true, subscriptions: true}));
       try {
         const [ordersRes, subsRes] = await Promise.all([
-          axios.get("http://localhost:5000/api/orders/my-orders", { headers: { Authorization: localStorage.getItem("token") } }),
-          axios.get("http://localhost:5000/api/subscriptions/my-subscriptions", { headers: { Authorization: localStorage.getItem("token") } })
+          axios.get("https://foodweb-backend-g881.onrender.com/api/orders/my-orders", { headers: { Authorization: localStorage.getItem("token") } }),
+          axios.get("https://foodweb-backend-g881.onrender.com/api/subscriptions/my-subscriptions", { headers: { Authorization: localStorage.getItem("token") } })
         ]);
         setOrders(ordersRes.data);
         setSubscriptions(subsRes.data);
@@ -204,7 +204,7 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      axios.get("http://localhost:5000/api/orders/my-orders", { headers: { Authorization: localStorage.getItem("token") } })
+      axios.get("https://foodweb-backend-g881.onrender.com/api/orders/my-orders", { headers: { Authorization: localStorage.getItem("token") } })
         .then(res => setOrders(res.data))
         .catch(() => console.log("Polling error"));
     }, 30000);
@@ -435,7 +435,7 @@ const CustomerDashboard = () => {
             onClick={() => viewMenu(r._id)}
           >
             {r.image && <img 
-              src={`http://localhost:5000/uploads/${r.image}`} 
+              src={`https://foodweb-backend-g881.onrender.com/uploads/${r.image}`} 
               alt={r.name} 
               className="w-full h-40 object-cover rounded-lg mb-3"
             />}
@@ -477,7 +477,7 @@ const CustomerDashboard = () => {
           >
             {m.image ? (
               <img
-                src={`http://localhost:5000/uploads/${m.image}`}
+                src={`https://foodweb-backend-g881.onrender.com/uploads/${m.image}`}
                 alt={m.name}
                 className="w-full h-40 object-cover rounded-lg mb-3"
                 onError={(e) => {
