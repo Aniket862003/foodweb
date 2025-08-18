@@ -41,7 +41,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
   const fetchUsers = async () => {
     setLoading(prev => ({...prev, users: true}));
     try {
-      const response = await axios.get("http://localhost:5000/api/superadmin/users", {
+      const response = await axios.get("https://foodweb-backend-g881.onrender.com/api/superadmin/users", {
         headers: { Authorization: localStorage.getItem("token") }
       });
       setUsers(response.data);
