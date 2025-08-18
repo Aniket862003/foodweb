@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -10,10 +9,10 @@ const Register = () => {
     address: "",
     password: "",
     role: "Customer",
-    adminCode: ""
+    adminCode: "",
   });
 
-  const navigate = useNavigate();
+  const { name, email, phone, address, password, role, adminCode } = formData;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,100 +20,89 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL || "https://foodweb-backend-g881.onrender.com"}/api/auth/register`,
+        "https://foodweb-backend-g881.onrender.com/api/auth/register",
         formData
       );
 
-      alert(res.data.message || "Registration Successful! Redirecting to Login...");
-      navigate("/login");
-    } catch (error) {
-      alert(error.response?.data?.message || "Registration failed. Try again.");
+      alert(res.data.message || "Registration successful!");
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        password: "",
+        role: "Customer",
+        adminCode: "",
+      });
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Error registering user");
     }
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gradient-to-r from-orange-50 to-orange-100 text-gray-600">
-      <div className="bg-white bg-opacity-20 backdrop-blur-md shadow-lg p-8 rounded-xl w-96 text-center">
-        <h2 className="text-3xl font-bold text-black mb-6">Register</h2>
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+    <div style={{ maxWidth: "400px", margin: "0 auto" }}>
+      <h2>Register</h2>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          placeholder="Name"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          value={email}
+          placeholder="Email"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="phone"
+          value={phone}
+          placeholder="Phone"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="text"
+          name="address"
+          value={address}
+          placeholder="Address"
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          value={password}
+          placeholder="Password"
+          onChange={handleChange}
+          required
+        />
+        <select name="role" value={role} onChange={handleChange}>
+          <option value="Customer">Customer</option>
+          <option value="Restaurant Admin">Restaurant Admin</option>
+          <option value="Super Admin">Super Admin</option>
+        </select>
+        {role !== "Customer" && (
           <input
             type="text"
-            name="name"
-            placeholder="Name"
+            name="adminCode"
+            value={adminCode}
+            placeholder="Admin Code"
             onChange={handleChange}
-            required
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
           />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            required
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-          />
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            required
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-          />
-          <input
-            type="phone"
-            name="phone"
-            placeholder="Phone"
-            onChange={handleChange}
-            required
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-          />
-          <input
-            type="text"
-            name="address"
-            placeholder="Address"
-            onChange={handleChange}
-            required
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-          />
-
-          <select
-            name="role"
-            onChange={handleChange}
-            className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-          >
-            <option>Customer</option>
-            <option>Restaurant Admin</option>
-            <option>Super Admin</option>
-          </select>
-
-          {["Restaurant Admin", "Super Admin"].includes(formData.role) && (
-            <input
-              type="text"
-              name="adminCode"
-              placeholder="Admin Code"
-              onChange={handleChange}
-              className="p-3 rounded-md bg-white bg-opacity-50 focus:bg-opacity-100 transition text-black outline-none"
-            />
-          )}
-
-          <button
-            type="submit"
-            className="bg-orange-600 text-gray-600 p-3 rounded-md hover:bg-orange-700 transition"
-          >
-            Register
-          </button>
-        </form>
-
-        <p className="text-black mt-4">
-          Already registered?{" "}
-          <a href="/login" className="text-blue-500 hover:underline">
-            Login
-          </a>
-        </p>
-      </div>
+        )}
+        <button type="submit">Register</button>
+      </form>
     </div>
   );
 };
