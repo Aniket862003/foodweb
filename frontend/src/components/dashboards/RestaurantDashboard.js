@@ -66,7 +66,7 @@ const RestaurantDashboard = () => {
     };
 
   const fetchOrders = () => {
-    axios.get("http://localhost:5000/api/orders/restaurant-orders", { 
+    axios.get("https://foodweb-backend-g881.onrender.com/api/orders/restaurant-orders", { 
       headers: { Authorization: localStorage.getItem("token") } 
     })
     .then(res => {
@@ -82,7 +82,7 @@ const RestaurantDashboard = () => {
   };
 
   const fetchRestaurants = () => {
-    axios.get("http://localhost:5000/api/restaurants/my-restaurants", { 
+    axios.get("https://foodweb-backend-g881.onrender.com/api/restaurants/my-restaurants", { 
       headers: { Authorization: localStorage.getItem("token") } 
     })
     .then(res => setRestaurants(res.data))
@@ -99,7 +99,7 @@ const RestaurantDashboard = () => {
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => value !== null && value !== undefined && formData.append(key, value));
     try {
-      const res = await axios.post(`http://localhost:5000/api/${endpoint}`, formData, {
+      const res = await axios.post(`https://foodweb-backend-g881.onrender.com/api/${endpoint}`, formData, {
         headers: { Authorization: localStorage.getItem("token"), 'Content-Type': 'multipart/form-data' }
       });
       alert(res.data.message);
@@ -111,13 +111,13 @@ const RestaurantDashboard = () => {
 
   const viewMenu = (restaurantId) => {
     setSelectedRestaurant(restaurantId);
-    axios.get(`http://localhost:5000/api/restaurants/${restaurantId}/menu`)
+    axios.get(`https://foodweb-backend-g881.onrender.com/api/restaurants/${restaurantId}/menu`)
       .then(res => setMenuItems(res.data))
       .catch(() => alert("Error fetching menu"));
   };
 
   const updateOrderStatus = (orderId, newStatus) => {
-    axios.put(`http://localhost:5000/api/orders/update-status/${orderId}`, { status: newStatus }, 
+    axios.put(`https://foodweb-backend-g881.onrender.com/api/orders/update-status/${orderId}`, { status: newStatus }, 
       { headers: { Authorization: localStorage.getItem("token") } }
     ).then(fetchOrders).catch(() => alert("Error updating status"));
   };
@@ -368,7 +368,7 @@ const RestaurantDashboard = () => {
                         className="p-4 bg-white border border-gray-200 rounded-lg cursor-pointer hover:shadow-md transition"
                       >
                         {r.image ? (
-                          <img src={`http://localhost:5000/uploads/${r.image}`} alt={r.name}
+                          <img src={`https://foodweb-backend-g881.onrender.com/uploads/${r.image}`} alt={r.name}
                             className="w-full h-40 object-cover rounded-lg mb-3" />
                         ) : (
                           <div className="w-full h-40 bg-gray-100 rounded-lg mb-3 flex items-center justify-center">
@@ -441,7 +441,7 @@ const RestaurantDashboard = () => {
                     className="p-4 bg-gray-50 rounded-lg hover:shadow-md transition"
                   >
                     {item.image && (
-                      <img src={`http://localhost:5000/uploads/${item.image}`} alt={item.name}
+                      <img src={`https://foodweb-backend-g881.onrender.com/uploads/${item.image}`} alt={item.name}
                         className="w-full h-32 object-cover rounded-lg mb-3" />
                     )}
                     <h3 className="text-lg font-semibold text-gray-800">{item.name}</h3>
