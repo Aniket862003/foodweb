@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../config";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -22,10 +23,7 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      const res = await axios.post(
-        "https://foodweb-backend-g881.onrender.com/api/auth/register",
-        formData
-      );
+      const res = await axios.post(`${API_BASE_URL}/api/auth/register`, formData);
 
       alert(res.data.message || "Registration successful!");
       setFormData({
