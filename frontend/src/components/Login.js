@@ -18,9 +18,9 @@ const Login = () => {
         formData
       );
 
-      console.log(res.data); // Debugging
+      console.log(res.data); // Check backend response
 
-      // Save user data in localStorage
+      // Save user details in localStorage
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("role", res.data.role);
       localStorage.setItem("name", res.data.name);
@@ -30,10 +30,12 @@ const Login = () => {
 
       // Redirect based on role
       if (res.data.role === "Customer") navigate("/customer-dashboard");
-      else if (res.data.role === "Restaurant Admin") navigate("/restaurant-dashboard");
-      else if (res.data.role === "Super Admin") navigate("/super-admin-dashboard");
+      else if (res.data.role === "Restaurant Admin")
+        navigate("/restaurant-dashboard");
+      else if (res.data.role === "Super Admin")
+        navigate("/super-admin-dashboard");
     } catch (error) {
-      console.error(error);
+      console.error(error.response?.data); // log the error properly
       alert(error.response?.data?.message || "Login failed");
     }
   };
@@ -61,7 +63,7 @@ const Login = () => {
           />
           <button
             type="submit"
-            className="bg-orange-600 text-white p-3 rounded-md hover:bg-orange-700 transition"
+            className="bg-orange-600 text-gray-600 p-3 rounded-md hover:bg-orange-700 transition"
           >
             Login
           </button>
