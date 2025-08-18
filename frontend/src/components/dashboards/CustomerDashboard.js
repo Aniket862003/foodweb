@@ -53,7 +53,7 @@ const CustomerDashboard = () => {
 
   useEffect(() => {
     setLoading(p => ({...p, restaurants: true}));
-    axios.get("http://localhost:5000/api/restaurants")
+    axios.get("https://foodweb-backend-g881.onrender.com/api/restaurants")
       .then(res => { setRestaurants(res.data); setLoading(p => ({...p, restaurants: false})); })
       .catch(() => { alert("Error fetching restaurants"); setLoading(p => ({...p, restaurants: false})); });
   }, []);
