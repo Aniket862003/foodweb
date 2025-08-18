@@ -46,7 +46,7 @@ const RestaurantDashboard = () => {
     const handleSaveProfile = async () => {
       try {
         // Update in backend
-        const response = await axios.put('http://localhost:5000/api/auth/update', profileData, {
+        const response = await axios.put('https://foodweb-backend-g881.onrender.com/api/auth/update', profileData, {
           headers: { Authorization: localStorage.getItem("token") }
         });
     
