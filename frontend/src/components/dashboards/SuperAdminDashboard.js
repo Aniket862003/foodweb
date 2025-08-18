@@ -56,7 +56,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
   const fetchRestaurants = async () => {
     setLoading(prev => ({...prev, restaurants: true}));
     try {
-      const response = await axios.get("http://localhost:5000/api/superadmin/restaurants", {
+      const response = await axios.get("https://foodweb-backend-g881.onrender.com/api/superadmin/restaurants", {
         headers: { Authorization: localStorage.getItem("token") }
       });
       setRestaurants(response.data);
@@ -72,10 +72,10 @@ const [showProfileModal, setShowProfileModal] = useState(false);
     setLoading(prev => ({...prev, orders: true, subscriptions: true}));
     try {
       const [ordersRes, subsRes] = await Promise.all([
-        axios.get(`http://localhost:5000/api/superadmin/orders/${userId}`, {
+        axios.get(`https://foodweb-backend-g881.onrender.com/api/superadmin/orders/${userId}`, {
           headers: { Authorization: localStorage.getItem("token") }
         }),
-        axios.get(`http://localhost:5000/api/superadmin/subscriptions/${userId}`, {
+        axios.get(`https://foodweb-backend-g881.onrender.com/api/superadmin/subscriptions/${userId}`, {
           headers: { Authorization: localStorage.getItem("token") }
         })
       ]);
@@ -92,7 +92,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
   const fetchRestaurantDetails = async (restaurantId) => {
     setLoading(prev => ({...prev, restaurantOrders: true}));
     try {
-      const response = await axios.get(`http://localhost:5000/api/superadmin/restaurants/${restaurantId}/orders`, {
+      const response = await axios.get(`https://foodweb-backend-g881.onrender.com/api/superadmin/restaurants/${restaurantId}/orders`, {
         headers: { Authorization: localStorage.getItem("token") }
       });
       setRestaurantOrders(response.data);
@@ -130,7 +130,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
   const handleSaveProfile = async () => {
     try {
       // Update in backend
-      const response = await axios.put('http://localhost:5000/api/auth/update', profileData, {
+      const response = await axios.put('https://foodweb-backend-g881.onrender.com/api/auth/update', profileData, {
         headers: { Authorization: localStorage.getItem("token") }
       });
   
@@ -153,7 +153,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
     if (!window.confirm("Are you sure you want to delete this user?")) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/superadmin/users/${id}`, {
+      await axios.delete(`https://foodweb-backend-g881.onrender.com/api/superadmin/users/${id}`, {
         headers: { Authorization: localStorage.getItem("token") }
       });
       setUsers(users.filter(user => user._id !== id));
@@ -173,7 +173,7 @@ const [showProfileModal, setShowProfileModal] = useState(false);
     if (!window.confirm("Are you sure you want to delete this restaurant?")) return;
     
     try {
-      await axios.delete(`http://localhost:5000/api/superadmin/restaurants/${id}`, {
+      await axios.delete(`https://foodweb-backend-g881.onrender.com/api/superadmin/restaurants/${id}`, {
         headers: { Authorization: localStorage.getItem("token") }
       });
       setRestaurants(restaurants.filter(restaurant => restaurant._id !== id));
