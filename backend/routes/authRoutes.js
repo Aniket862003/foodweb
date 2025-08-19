@@ -47,6 +47,7 @@ router.post("/register", async (req, res) => {
       role,
     });
 
+    console.log("✅ User registered:", email);
     res.status(201).json({ message: "User Registered Successfully" });
   } catch (error) {
     console.error("❌ Registration Error:", error);
@@ -54,16 +55,24 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// ✅ User Login
+// User Login
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    console.log("🔹 Login attempt:", email);
+
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ message: "Invalid Email or Password" });
+    if (!user) {
+      console.log("❌ User not found:", email);
+      return res.status(400).json({ message: "Invalid Email or Password" });
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ message: "Invalid Email or Password" });
+    if (!isMatch) {
+      console.log("❌ Password mismatch for:", email);
+      return res.status(400).json({ message: "Invalid Email or Password" });
+    }
 
     // Generate JWT token
     const token = jwt.sign(
@@ -72,6 +81,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    console.log("✅ Login successful:", email);
     res.json({
       token,
       role: user.role,
@@ -97,9 +107,10 @@ router.put("/update", authMiddleware, async (req, res) => {
       { new: true, runValidators: true }
     ).select("-password");
 
+    console.log("✅ User updated:", req.user.id);
     res.json(user);
   } catch (err) {
-    console.error(err.message);
+    console.error("❌ Update Error:", err);
     res.status(500).send("Server Error");
   }
 });
