@@ -2,7 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const path = require("path");
-const chalk = require("chalk");
+// const chalk = require("chalk");
 const figlet = require("figlet");
 
 const connectDB = require("./config/db");
