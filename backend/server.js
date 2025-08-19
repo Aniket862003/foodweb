@@ -1,7 +1,10 @@
 const express = require("express");
 const dotenv = require("dotenv");
-
 const cors = require("cors");
+const path = require("path");
+const chalk = require("chalk");
+const figlet = require("figlet");
+
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
 const restaurantRoutes = require("./routes/restaurantRoutes");
@@ -9,10 +12,9 @@ const menuRoutes = require("./routes/menuRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const subscriptionRoutes = require("./routes/subscriptionRoutes");
 const superAdminRoutes = require("./routes/superAdminRoutes");
-const path = require("path");
 
 dotenv.config(); // Load environment variables
-
+connectDB(); // Connect to the database
 
 const app = express();
 
@@ -32,5 +34,16 @@ app.use("/api/superadmin", superAdminRoutes);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Server Port
-const PORT = process.env.PORT || 5000; // Corrected the PORT assignment
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const PORT = process.env.PORT || 5000;
+
+// Server Start
+app.listen(PORT, () => {
+  console.log(
+    chalk.cyan(
+      figlet.textSync("Food Delivery", { horizontalLayout: "full" })
+    )
+  );
+  console.log(chalk.green.bold(`🚀 Server running on port ${PORT} ✅`));
+  console.log(chalk.yellow(`📡 API Base URL: http://localhost:${PORT}/api`));
+  console.log(chalk.blue(`🕒 Started at: ${new Date().toLocaleString()}`));
+});
